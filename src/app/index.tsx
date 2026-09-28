@@ -1,98 +1,83 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from "expo-router";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+export default function Index() {
+  const router = useRouter();
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
   return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+    <View style={styles.container}>
+      <Text style={styles.titulo}>Z-Memory</Text>
 
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+      <TouchableOpacity
+        style={styles.botao}
+        onPress={() => router.push("/medicamentos")}
+      >
+        <Text style={styles.textoBotao}>Medicamentos</Text>
+      </TouchableOpacity>
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
+      <TouchableOpacity
+        style={styles.botao}
+        onPress={() => router.push("/diario")}
+      >
+        <Text style={styles.textoBotao}>Diário</Text>
+      </TouchableOpacity>
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
+      <TouchableOpacity
+        style={styles.botao}
+        onPress={() => router.push("/exercicio")}
+      >
+        <Text style={styles.textoBotao}>Exercício</Text>
+      </TouchableOpacity>
 
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+      <TouchableOpacity
+        style={styles.botao}
+        onPress={() => router.push("/perfil")}
+      >
+        <Text style={styles.textoBotao}>Perfil</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.botaoMemorias}
+        onPress={() => router.push("/memorias")}
+      >
+        <Text style={styles.textoBotao}>Memórias</Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
+    backgroundColor: "#FFF6E9",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+  titulo: {
+    fontSize: 28,
+    fontWeight: "bold",
+    marginBottom: 30,
   },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+  botao: {
+    backgroundColor: "#F2A65A",
+    width: 200,
+    height: 60,
+    borderRadius: 16,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 15,
   },
-  title: {
-    textAlign: 'center',
+  botaoMemorias: {
+    backgroundColor: "#E07A5F",
+    width: 260,
+    height: 70,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
   },
-  code: {
-    textTransform: 'uppercase',
-  },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+  textoBotao: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "600",
   },
 });
